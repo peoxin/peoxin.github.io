@@ -24,7 +24,7 @@
 <meta property="og:description" content="本文记录了ArchLinux的安装和配置流程，方便自己今后查阅，也提供给大家作为参考">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-01T18:07:54.000Z">
-<meta property="article:modified_time" content="2022-06-08T11:26:56.522Z">
+<meta property="article:modified_time" content="2022-07-24T18:29:41.105Z">
 <meta property="article:author" content="peoxin">
 <meta property="article:tag" content="linux">
 <meta name="twitter:card" content="summary_large_image">
@@ -230,7 +230,7 @@
         <i class="iconfont icon-chart"></i>
         
           <!-- compatible with older versions-->
-          6.8k 字
+          7.2k 字
         
       </span>
     
@@ -242,7 +242,7 @@
         
         
           <!-- compatible with older versions-->
-          22 分钟
+          23 分钟
         
       </span>
     
@@ -294,7 +294,7 @@
                 
                   
                     <!-- compatible with older versions-->
-                    本文最后更新于：1 分钟前
+                    本文最后更新于：9 小时前
                   
                 
               </p>
@@ -302,28 +302,28 @@
             <div class="markdown-body">
               
               <p>如果遇到任何问题，请优先查阅ArchLinux官方文档<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/">ArchWiki</a>。</p>
-<h2 id="安装ArchLinux"><a href="#安装ArchLinux" class="headerlink" title="安装ArchLinux"></a>安装ArchLinux</h2><p>ArchLinux的安装流程，主要参考ArchLinux官方文档<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide">Installation guide - ArchWiki</a></p>
+<h2 id="安装ArchLinux"><a href="#安装ArchLinux" class="headerlink" title="安装ArchLinux"></a>安装ArchLinux</h2><p>ArchLinux的安装流程，主要参考ArchLinux官方文档<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Installation_guide">Installation guide - ArchWiki</a>。</p>
 <h3 id="安装前准备"><a href="#安装前准备" class="headerlink" title="安装前准备"></a>安装前准备</h3><h4 id="下载安装镜像"><a href="#下载安装镜像" class="headerlink" title="下载安装镜像"></a>下载安装镜像</h4><p>在<a target="_blank" rel="noopener" href="https://mirrors.tuna.tsinghua.edu.cn/archlinux/iso/">ArchLinux 清华源</a>，下载ISO安装镜像<code>archlinux-version-x86_64.iso</code>。</p>
 <h4 id="验证签名"><a href="#验证签名" class="headerlink" title="验证签名"></a>验证签名</h4><p>在下载安装镜像的相同网址，下载PGP签名文件<code>archlinux-version-x86_64.iso.sig</code>，并复制到ISO镜像所在的文件夹。使用<code>GnuPG</code>工具，验证安装镜像的完整性：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">gpg --keyserver-options auto-key-retrieve --verify archlinux-version-x86_64.iso.sig<br></code></pre></td></tr></table></figure>
 
 <h4 id="刻录镜像"><a href="#刻录镜像" class="headerlink" title="刻录镜像"></a>刻录镜像</h4><p>Windows系统下使用<code>rufus</code>软件，将安装镜像刻录到U盘中。</p>
-<p>Linux系统下使用<code>dd</code>刻录镜像。</p>
+<p>Linux系统下使用<code>dd</code>命令，刻录镜像。</p>
 <h3 id="正式安装"><a href="#正式安装" class="headerlink" title="正式安装"></a>正式安装</h3><h4 id="进入安装环境"><a href="#进入安装环境" class="headerlink" title="进入安装环境"></a>进入安装环境</h4><p>重启电脑，进入BIOS界面设置首选启动项为U盘。从U盘启动，进入安装环境。</p>
 <h4 id="验证启动模式"><a href="#验证启动模式" class="headerlink" title="验证启动模式"></a>验证启动模式</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ls /sys/firmware/efi/efivars<br></code></pre></td></tr></table></figure>
 
-<p>如果能够正确显示路径，无错误提示，说明启动模式为UEFI。</p>
+<p>如果能够正确显示路径信息，无错误提示，说明启动模式为UEFI。</p>
 <h4 id="连接网络"><a href="#连接网络" class="headerlink" title="连接网络"></a>连接网络</h4><p>验证网络连接：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">ping baidu.com<br></code></pre></td></tr></table></figure>
 
 <p>如果是有线网络，应该会自动连接。</p>
-<p>如果是无线网络，执行<code>iwtcl</code>进入<code>iwd</code>提示符（执行<code>exit</code>或按<code>Ctrl</code>+<code>d</code>退出提示符），并执行：</p>
-<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">device</span> <span class="hljs-string">list</span> <span class="hljs-comment"># 列出网卡设备，将下列命令的&lt;device&gt;更换为你的网卡设备</span><br><span class="hljs-string">station</span> &lt;<span class="hljs-string">device</span>&gt; <span class="hljs-string">scan</span> <span class="hljs-comment"># 扫描可用无线网络</span><br><span class="hljs-string">station</span> &lt;<span class="hljs-string">device</span>&gt; <span class="hljs-built_in">get-networks</span> <span class="hljs-comment"># 显示扫描的结果</span><br><span class="hljs-string">station</span> &lt;<span class="hljs-string">device</span>&gt; <span class="hljs-string">connect</span> &lt;<span class="hljs-string">SSID</span>&gt; <span class="hljs-comment"># 连接无线网络，将&lt;SSID&gt;更换为无线网络的SSID</span><br></code></pre></td></tr></table></figure>
+<p>如果是无线网络，执行<code>iwctl</code>进入<code>iwd</code>提示符（执行<code>exit</code>退出提示符），并执行：</p>
+<figure class="highlight dsconfig"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dsconfig"><span class="hljs-string">device</span> <span class="hljs-string">list</span> <span class="hljs-comment"># 列出网卡设备，将下列命令的&lt;device&gt;更换为你的网卡设备</span><br><span class="hljs-string">station</span> &lt;<span class="hljs-string">device</span>&gt; <span class="hljs-string">scan</span> <span class="hljs-comment"># 扫描可用无线网络（该命令无输出）</span><br><span class="hljs-string">station</span> &lt;<span class="hljs-string">device</span>&gt; <span class="hljs-built_in">get-networks</span> <span class="hljs-comment"># 显示扫描的结果</span><br><span class="hljs-string">station</span> &lt;<span class="hljs-string">device</span>&gt; <span class="hljs-string">connect</span> &lt;<span class="hljs-string">SSID</span>&gt; <span class="hljs-comment"># 连接无线网络，将&lt;SSID&gt;更换为无线网络的SSID</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="更新系统时钟"><a href="#更新系统时钟" class="headerlink" title="更新系统时钟"></a>更新系统时钟</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">timedatectl set-ntp true<br></code></pre></td></tr></table></figure>
 
 <p>更新系统时钟后，可以执行<code>timedatectl status</code>检查。</p>
-<h4 id="硬盘分区"><a href="#硬盘分区" class="headerlink" title="硬盘分区"></a>硬盘分区</h4><p>推荐使用<code>cfdisk</code>进行硬盘分区。执行<code>cfdisk</code>进入硬盘分区界面，参考分区表如下：</p>
+<h4 id="硬盘分区"><a href="#硬盘分区" class="headerlink" title="硬盘分区"></a>硬盘分区</h4><p>推荐使用<code>cfdisk</code>进行硬盘分区。执行<code>cfdisk /dev/&lt;disk-name&gt;</code>进入硬盘分区界面。参考分区表如下：</p>
 <table>
 <thead>
 <tr>
@@ -361,8 +361,11 @@
 <p>分区完成后，可以执行<code>cfdisk</code>，<code>fdisk -l</code>，<code>lsblk -f</code>等命令检查分区情况。</p>
 <h4 id="格式化硬盘分区"><a href="#格式化硬盘分区" class="headerlink" title="格式化硬盘分区"></a>格式化硬盘分区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkfs.fat -F 32 /dev/&lt;efi_system_partition&gt; # 参考分区下&lt;efi_system_partition&gt;为sda1<br>mkfs.ext4 /dev/&lt;root_partition&gt; # 参考分区下&lt;root_partition&gt;为sda2<br>mkswap /dev/&lt;swap_partition&gt; # 参考分区下&lt;swap_partition&gt;为sda3<br>mkfs.ext4 /dev/&lt;home_partition&gt; # 参考分区下&lt;home_partition&gt;为sda4<br></code></pre></td></tr></table></figure>
 
-<h4 id="挂载硬盘分区"><a href="#挂载硬盘分区" class="headerlink" title="挂载硬盘分区"></a>挂载硬盘分区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">mount --mkdir /dev/&lt;efi_system_partition&gt; /mnt/boot # 参考分区下&lt;efi_system_partition&gt;为sda1<br>mount /dev/&lt;root_partition&gt; /mnt # 参考分区下&lt;root_partition&gt;为sda2<br>swapon /dev/&lt;swap_partition&gt; # 参考分区下&lt;swap_partition&gt;为sda3<br>mount --mkdir /dev/&lt;home_partition&gt; /mnt/home # 参考分区下&lt;home_partition&gt;为sda4<br></code></pre></td></tr></table></figure>
+<h4 id="挂载硬盘分区"><a href="#挂载硬盘分区" class="headerlink" title="挂载硬盘分区"></a>挂载硬盘分区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">mount /dev/&lt;root_partition&gt; /mnt # 参考分区下&lt;root_partition&gt;为sda2<br>mount --mkdir /dev/&lt;efi_system_partition&gt; /mnt/boot # 参考分区下&lt;efi_system_partition&gt;为sda1<br>swapon /dev/&lt;swap_partition&gt; # 参考分区下&lt;swap_partition&gt;为sda3<br>mount --mkdir /dev/&lt;home_partition&gt; /mnt/home # 参考分区下&lt;home_partition&gt;为sda4<br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p>挂载硬盘分区时，必须首先挂载<code>Root</code>分区，然后才能挂载<code>ESP</code>分区。否则，<code>/mnt/boot</code>会发生冲突，导致出错。</p>
+</blockquote>
 <h4 id="更换镜像源"><a href="#更换镜像源" class="headerlink" title="更换镜像源"></a>更换镜像源</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/pacman.d/mirrorlist<br></code></pre></td></tr></table></figure>
 
 <p>在文件最顶端添加：</p>
@@ -372,16 +375,18 @@
 
 <h3 id="系统初步配置"><a href="#系统初步配置" class="headerlink" title="系统初步配置"></a>系统初步配置</h3><h4 id="生成Fstab文件"><a href="#生成Fstab文件" class="headerlink" title="生成Fstab文件"></a>生成Fstab文件</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab<br></code></pre></td></tr></table></figure>
 
+<p>执行<code>cat /mnt/etc/fstab</code>，检查是否正确。如果不正确，可以尝试手动修改，参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Fstab">Fstab - ArchWiki</a>。修改完成后，可以执行<code>systemctl daemon-reload</code>，进行刷新。</p>
 <h4 id="Chroot"><a href="#Chroot" class="headerlink" title="Chroot"></a>Chroot</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">arch-chroot /mnt<br></code></pre></td></tr></table></figure>
 
 <h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime<br>hwclock --systohc<br></code></pre></td></tr></table></figure>
 
-<h4 id="本地化设置"><a href="#本地化设置" class="headerlink" title="本地化设置"></a>本地化设置</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/locale.gen<br></code></pre></td></tr></table></figure>
+<h4 id="本地化设置"><a href="#本地化设置" class="headerlink" title="本地化设置"></a>本地化设置</h4><p>安装<code>vim</code>，然后执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/locale.gen<br></code></pre></td></tr></table></figure>
 
-<p>将<code>en_US.UTF-8 UTF-8</code>和<code>zh_CN.UTF-8 UTF-8</code>取消注释。</p>
+<p>将<code>en_US.UTF-8 UTF-8</code>和<code>zh_CN.UTF-8 UTF-8</code>取消注释。然后执行<code>locale-gen</code>命令。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/locale.conf # 新建locale.conf文件<br></code></pre></td></tr></table></figure>
 
-<p>添加<code>LANG = en_US.UTF-8</code>。</p>
+<p>添加<code>LANG=en_US.UTF-8</code>。</p>
 <h4 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">vim /etc/hostname # 新建hostname文件<br></code></pre></td></tr></table></figure>
 
 <p>添加主机名，例如：<code>myhostname</code>。</p>
@@ -394,38 +399,38 @@
 <h4 id="安装和配置GRUB"><a href="#安装和配置GRUB" class="headerlink" title="安装和配置GRUB"></a>安装和配置GRUB</h4><p>安装<code>grub</code>和<code>efibootmgr</code>，执行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S grub efibootmgr<br></code></pre></td></tr></table></figure>
 
-<p>执行<code>lsblk -f</code>，检查<code>EFI System Partition</code>的挂载点，确保其已被成功挂载。在以下命令中，用该挂载点代替<code>&lt;esp_mount_point&gt;</code>：</p>
+<p>执行<code>lsblk -f</code>，检查<code>EFI System Partition</code>的挂载点，确保其已被成功挂载。如果没有成功挂载，检查<code>Fstab</code>文件。</p>
+<p>在以下命令中，用该挂载点代替<code>&lt;esp_mount_point&gt;</code>：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">参考挂载点下，&lt;esp_mount_point&gt;为/boot，注意并非/mnt/boot</span><br>grub-install --target=x86_64-efi --efi-directory=&lt;esp_mount_point&gt; --bootloader-id=GRUB<br>grub-mkconfig -o /boot/grub/grub.cfg<br></code></pre></td></tr></table></figure>
 
+<blockquote>
+<p>注意检查<code>grub-mkconfig -o /boot/grub/grub.cfg</code>命令的输出，应该包含以下信息：<br><code>Found linux image: /boot/vmlinuz-linux</code><br><code>Found initrd image: /boot/initramfs-linux.img</code><br><code>Found fallback initrd image(s) in /boot: initramfs-linux-fallback.img</code><br>如果无上述信息，说明安装出错。可以检查<code>Fstab</code>文件和挂载硬盘分区的顺序。</p>
+</blockquote>
 <h4 id="安装网络工具和文本编辑器"><a href="#安装网络工具和文本编辑器" class="headerlink" title="安装网络工具和文本编辑器"></a>安装网络工具和文本编辑器</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S iwd dhcpcd vim<br></code></pre></td></tr></table></figure>
 
 <blockquote>
-<p>如果不安装网络工具，新系统将无法联网。如果进入新系统后发现忘记安装网络工具，解决方法如下：</p>
+<p>如果不安装网络工具，新系统将无法联网。如果进入新系统后，发现忘记安装网络工具，解决方法如下：</p>
 <p>重启并再次从U盘启动，进入安装环境。执行：</p>
 <p><code>mount /dev/&lt;root_partition&gt; /mnt # 参考分区下&lt;root_partition&gt;为sda2</code><br><code>arch-chroot /mnt</code><br><code>pacman -S iwd dhcpcd</code></p>
 <p>继续进行以下<strong>重启</strong>步骤，进入新系统。</p>
 </blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mount /dev/&lt;root_partition&gt; /mnt # 参考分区下&lt;root_partition&gt;为sda2<br>arch-chroot /mnt<br>pacman -S iwd dhcpcd<br></code></pre></td></tr></table></figure>
-
 <h4 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">exit # 退出Chroot<br>umount -R /mnt # 解除硬盘挂载<br>reboot # 重启并进入新系统<br></code></pre></td></tr></table></figure>
 
 <h3 id="重启后简单配置"><a href="#重启后简单配置" class="headerlink" title="重启后简单配置"></a>重启后简单配置</h3><h4 id="连接网络-1"><a href="#连接网络-1" class="headerlink" title="连接网络"></a>连接网络</h4><h5 id="有线网络"><a href="#有线网络" class="headerlink" title="有线网络"></a>有线网络</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl start dhcpcd.service # 启动dhcpcd服务<br>systemctl enable dhcpcd.service # 开机自启动dhcpcd服务<br></code></pre></td></tr></table></figure>
 
-<h5 id="无线网络"><a href="#无线网络" class="headerlink" title="无线网络"></a>无线网络</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl start iwd.service # 启动iwd服务<br>systemctl enable iwd.service # 开机自启动iwd服务<br>systemctl start systemd-resolved.service # 启动systemd-resolved服务<br>systemctl enable systemd-resolved.service # 开机自启动systemd-resolved服务<br></code></pre></td></tr></table></figure>
+<h5 id="无线网络"><a href="#无线网络" class="headerlink" title="无线网络"></a>无线网络</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">systemctl start iwd.service # 启动iwd服务<br>systemctl enable iwd.service # 开机自启动iwd服务<br>systemctl start dhcpcd.service # 启动dhcpcd服务<br>systemctl enable dhcpcd.service # 开机自启动dhcpcd服务<br></code></pre></td></tr></table></figure>
 
-<p>执行<code>vim /etc/iwd/main.conf</code>，添加：</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-section">[General]</span><br><span class="hljs-attr">EnableNetworkConfiguration</span>=<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-
+<p>执行<code>iwctl</code>，连接无线网络。</p>
 <h4 id="添加普通用户"><a href="#添加普通用户" class="headerlink" title="添加普通用户"></a>添加普通用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">useradd -m username # 添加用户名为username的用户<br>passwd username # 为用户username设置密码<br><span class="hljs-meta prompt_"># </span><span class="language-bash">添加用户的更多选项</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">useradd -m -G additional_groups -s login_shell username</span><br></code></pre></td></tr></table></figure>
 
 <p>为新添加的普通用户设置root权限：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S sudo<br>vim /etc/sudoers<br></code></pre></td></tr></table></figure>
 
-<p>打开<code>/etc/sudoers</code>文件后，在<code>root ALL=(ALL) ALL</code>一行下，添加<code>username ALL=(ALL) ALL</code>。</p>
+<p>打开<code>/etc/sudoers</code>文件后，在<code>root ALL=(ALL:ALL) ALL</code>一行下，添加<code>username ALL=(ALL:ALL) ALL</code>。</p>
 <p>执行<code>exit</code>退出root用户的登录，并登录<code>username</code>用户。</p>
 <p>至此，ArchLinux已经完成安装。</p>
-<h2 id="安装KDE桌面环境"><a href="#安装KDE桌面环境" class="headerlink" title="安装KDE桌面环境"></a>安装KDE桌面环境</h2><p>ArchLinux安装完成后，为了方便使用，可以选择安装桌面环境或窗口管理器。常用的桌面环境有GNOME、KDE Plasma、XFCE等，可以查阅<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Desktop_environment">Desktop environment - ArchWiki</a>和<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Window_manager">Window manager - ArchWiki</a>获取更多信息。</p>
-<p>下面安装KDE Plasma桌面环境。</p>
+<h2 id="安装KDE桌面环境"><a href="#安装KDE桌面环境" class="headerlink" title="安装KDE桌面环境"></a>安装KDE桌面环境</h2><p>ArchLinux安装完成后，为了方便使用，可以选择安装桌面环境或窗口管理器。常用的桌面环境有KDE Plasma、GNOME、XFCE等，可以查阅<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Desktop_environment">Desktop environment - ArchWiki</a>和<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/title/Window_manager">Window manager - ArchWiki</a>获取更多信息。</p>
+<p>下面安装KDE Plasma桌面环境。推荐全局主题：<code>Arc Dark</code>。</p>
 <h3 id="安装显示服务器"><a href="#安装显示服务器" class="headerlink" title="安装显示服务器"></a>安装显示服务器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S xorg<br></code></pre></td></tr></table></figure>
 
 <h3 id="安装KDE软件包"><a href="#安装KDE软件包" class="headerlink" title="安装KDE软件包"></a>安装KDE软件包</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S plasma kde-applications<br></code></pre></td></tr></table></figure>
@@ -465,15 +470,15 @@
 <h4 id="手动安装AUR软件包"><a href="#手动安装AUR软件包" class="headerlink" title="手动安装AUR软件包"></a>手动安装AUR软件包</h4><p>访问<a target="_blank" rel="noopener" href="https://aur.archlinux.org/">AUR</a>，获取所要安装的软件包的Git Clone URL。进入合适的目录，执行命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">git clone &lt;git_clone_url&gt; # 将&lt;git_clone_url&gt;更换为所要安装软件包的Git Clone URL<br>cd &lt;package_name&gt; # 将&lt;package_name&gt;更换为所要安装软件包的名字，进入软件安装包目录<br>makepkg -si # 安装软件包<br></code></pre></td></tr></table></figure>
 
-<h4 id="使用AUR助手"><a href="#使用AUR助手" class="headerlink" title="使用AUR助手"></a>使用AUR助手</h4><p>安装AUR助手，可以按照手动安装AUR软件包的方法，安装<code>yay</code>或其他AUR助手。</p>
-<p>使用AUR助手安装软件包：</p>
+<h4 id="使用AUR助手"><a href="#使用AUR助手" class="headerlink" title="使用AUR助手"></a>使用AUR助手</h4><p>可以按照手动安装AUR软件包的方法，安装<code>yay</code>或其他AUR助手。参考：<a target="_blank" rel="noopener" href="https://github.com/Jguer/yay">GitHub - Jguer&#x2F;yay</a>。</p>
+<p>使用<code>yay</code>安装软件包：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">yay -S &lt;package_name&gt; # 将&lt;package_name&gt;更换为所要安装软件包的名字<br></code></pre></td></tr></table></figure>
 
 <h3 id="安装中文输入法"><a href="#安装中文输入法" class="headerlink" title="安装中文输入法"></a>安装中文输入法</h3><p>此处选择安装<code>fcitx5</code>输入法框架：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S fcitx5-im # fcitx5-im包含fcitx5、fcitx5-configtool、fcitx5-gtk、fcitx5-qt<br></code></pre></td></tr></table></figure>
 
 <p>安装中文输入法：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">选择其中一个安装，或者全部安装</span><br>sudo pacman -S fcitx5-chinese-addons<br>sudo pacman -S fcitx5-rime<br></code></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">选择其中一个安装，或者全部安装</span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">推荐仅安装fcitx5-chinese-addons</span><br>sudo pacman -S fcitx5-chinese-addons<br>sudo pacman -S fcitx5-rime<br></code></pre></td></tr></table></figure>
 
 <p>配置环境变量，执行<code>vim /etc/environment</code>，添加以下内容：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">GTK_IM_MODULE</span>=fcitx<br><span class="hljs-attr">QT_IM_MODULE</span>=fcitx<br><span class="hljs-attr">XMODIFIERS</span>=@im=fcitx<br></code></pre></td></tr></table></figure>
@@ -492,6 +497,7 @@
 
 <blockquote>
 <p><code>Oh My Zsh</code>的配置，参考<a target="_blank" rel="noopener" href="https://github.com/ohmyzsh/ohmyzsh/wiki">ohmyzsh&#x2F;ohmyzsh Wiki</a></p>
+<p>推荐主题：<code>robbyrussell</code>、<code>agnoster</code></p>
 </blockquote>
 <h3 id="配置Vim"><a href="#配置Vim" class="headerlink" title="配置Vim"></a>配置Vim</h3><p>此处安装并使用<code>neovim</code>。执行命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacman -S neovim<br></code></pre></td></tr></table></figure>
@@ -535,6 +541,14 @@
 <td>Typora</td>
 <td><code>typora</code>或<code>typora-free</code></td>
 </tr>
+<tr>
+<td>Latte Dock</td>
+<td><code>latte-dock</code></td>
+</tr>
+<tr>
+<td>MarkText</td>
+<td><code>marktext-bin</code></td>
+</tr>
 </tbody></table>
 <h4 id="安装Clash的注意事项"><a href="#安装Clash的注意事项" class="headerlink" title="安装Clash的注意事项"></a>安装Clash的注意事项</h4><p>Clash安装完成后，需要配置全局代理，即设置环境变量如下：</p>
 <figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs awk">http_proxy=http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7890</span> <span class="hljs-comment"># 端口号与Clash设置保持一致</span><br>https_proxy=http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7890</span><br>ftp_proxy=http:<span class="hljs-regexp">//</span><span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>:<span class="hljs-number">7890</span><br></code></pre></td></tr></table></figure>
@@ -553,7 +567,7 @@
 <p>参考：<a target="_blank" rel="noopener" href="https://github.com/vufa/deepin-wine-wechat-arch#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3">vufa&#x2F;deepin-wine-wechat 常见问题及解决</a></p>
 </blockquote>
 <h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/157260502">Archlinux最新安装教程：2020-07 - 知乎</a></p>
-<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/460826583">Manjaro KDE 调教配置及美化（2022.01.23） - 知乎</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/460826583">Manjaro KDE 调教配置及美化（2022.01.23）- 知乎</a></p>
 
               
             </div>
